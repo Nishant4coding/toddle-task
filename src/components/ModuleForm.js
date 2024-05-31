@@ -1,4 +1,3 @@
-// src/components/ModuleForm.js
 import React, { useState } from 'react';
 
 const ModuleForm = ({ addModule }) => {
@@ -11,15 +10,18 @@ const ModuleForm = ({ addModule }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="mb-4">
       <input
         type="text"
         value={moduleName}
         onChange={(e) => setModuleName(e.target.value)}
         placeholder="Enter module name"
+        className="border p-2 rounded mr-2"
         required
       />
-      <button type="submit">Add Module</button>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        Add Module
+      </button>
     </form>
   );
 };

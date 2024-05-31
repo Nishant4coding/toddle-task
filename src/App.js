@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import ModuleList from './components/ModuleList';
 import ModuleForm from './components/ModuleForm';
@@ -57,8 +56,8 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <h1>Course Modules</h1>
+    <div className="App container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">Course Modules</h1>
       <ModuleForm addModule={addModule} />
       <ModuleList
         modules={modules}

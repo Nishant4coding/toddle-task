@@ -1,19 +1,24 @@
-// src/components/ResourceList.js
 import React from 'react';
 
 const ResourceList = ({ resources, deleteResource, renameResource }) => {
   return (
     <div>
-      <h3>Resources</h3>
-      <ul>
+      <h3 className="text-xl font-semibold mb-2">Resources</h3>
+      <ul className="space-y-2">
         {resources.map((resource, index) => (
-          <li key={index}>
+          <li key={index} className="flex items-center space-x-2">
             <input
               type="text"
               value={resource.name}
               onChange={(e) => renameResource(index, e.target.value)}
+              className="border p-2 rounded flex-1"
             />
-            <button onClick={() => deleteResource(index)}>Delete</button>
+            <button
+              onClick={() => deleteResource(index)}
+              className="bg-red-500 text-white p-2 rounded"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
