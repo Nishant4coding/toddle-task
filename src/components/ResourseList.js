@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResourceList = ({ resources, deleteResource, renameResource }) => {
+const ResourceList = ({ resources, deleteResource, renameResource,setResourceFile }) => {
   return (
     <div>
       <h3 className="text-xl font-semibold mb-2">Resources</h3>
@@ -13,6 +13,7 @@ const ResourceList = ({ resources, deleteResource, renameResource }) => {
               onChange={(e) => renameResource(index, e.target.value)}
               className="border p-2 rounded flex-1"
             />
+            <span  onChange={(e) => setResourceFile(e.target.files.value)}>{resource.resourceFile}</span>
             <button
               onClick={() => deleteResource(index)}
               className="bg-red-500 text-white p-2 rounded"
