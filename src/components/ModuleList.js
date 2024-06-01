@@ -16,6 +16,8 @@ const ModuleList = ({
   addLink,
   deleteLink,
   renameLink,
+  moveResource,
+  moveLink
 }) => {
   return (
     <DndProvider backend={HTML5Backend}>
@@ -36,23 +38,22 @@ const ModuleList = ({
               >
                 Delete
               </button>
-              <ResourceForm
-                addResource={(resource) => addResource(moduleIndex, resource)}
-              />
-              <LinkForm
-                addLink={(link) => addLink(moduleIndex, link)}
-              />
-              <DragAndDrop
+              {/* <ResourceList
                 resources={module.resources}
-                links={module.links}
                 deleteResource={(resourceIndex) => deleteResource(moduleIndex, resourceIndex)}
                 renameResource={(resourceIndex, newName) =>
                   renameResource(moduleIndex, resourceIndex, newName)
                 }
-                deleteLink={(linkIndex) => deleteLink(moduleIndex, linkIndex)}
-                renameLink={(linkIndex, newName) =>
-                  renameLink(moduleIndex, linkIndex, newName)
-                }
+              /> */}
+              <ResourceForm addResource={(resources)=>addResource(moduleIndex,resources)} 
+              resources={module.resources}
+              deleteResource={(resourceIndex)=>deleteResource(moduleIndex,resourceIndex)}/>
+              <LinkForm addLink={(link) => addLink(moduleIndex, link)} />
+              <DragAndDrop
+                resources={module.resources}
+                links={module.links}
+                moveResource={(dragIndex, hoverIndex) => moveResource(moduleIndex, dragIndex, hoverIndex)}
+                moveLink={(dragIndex, hoverIndex) => moveLink(moduleIndex, dragIndex, hoverIndex)}
               />
             </li>
           ))}

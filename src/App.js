@@ -117,8 +117,8 @@ const App = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">Course Builder</h1>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-4">Course Modules</h1>
       <ModuleForm addModule={addModule} />
       <ModuleList
         modules={modules}
