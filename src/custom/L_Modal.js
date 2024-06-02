@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const AddLinkModal = ({ isOpen, onClose, addLink }) => {
-  const [linkName, setLinkName] = useState('');
-  const [linkUrl, setLinkUrl] = useState('');
+  const [linkName, setLinkName] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     addLink({ name: linkName, url: linkUrl });
-    setLinkName('');
-    setLinkUrl('');
+    setLinkName("");
+    setLinkUrl("");
     onClose();
   };
 
@@ -20,19 +20,9 @@ const AddLinkModal = ({ isOpen, onClose, addLink }) => {
         <h2 className="text-2xl font-semibold mb-4">Add New Link</h2>
         <form onSubmit={handleSubmit} className="mb-4">
           <div className="mb-4">
-            <label htmlFor="linkName" className="text-gray-700 mb-1 block">Link Name</label>
-            <input
-              type="text"
-              id="linkName"
-              value={linkName}
-              onChange={(e) => setLinkName(e.target.value)}
-              placeholder="Enter link name"
-              className="border border-gray-300 p-2 rounded focus:outline-none w-full"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="linkUrl" className="text-gray-700 mb-1 block">Link URL</label>
+            <label htmlFor="linkUrl" className="text-gray-700 mb-1 block font-bold">
+              URL
+            </label>
             <input
               type="url"
               id="linkUrl"
@@ -43,12 +33,33 @@ const AddLinkModal = ({ isOpen, onClose, addLink }) => {
               required
             />
           </div>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none w-full">
+          <div className="mb-4">
+            <label htmlFor="linkName" className="text-gray-700 mb-1 block font-bold">
+              Display Name
+            </label>
+            <input
+              type="text"
+              id="linkName"
+              value={linkName}
+              onChange={(e) => setLinkName(e.target.value)}
+              placeholder="Enter link name"
+              className="border border-gray-300 p-2 rounded focus:outline-none w-full"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="bg-[#008392] text-white p-2 rounded  w-full"
+          >
             Add Link
           </button>
         </form>
-        <button onClick={onClose} className="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400 focus:outline-none w-full">
-          Close
+        <button
+          onClick={onClose}
+          className="bg-white border text-gray-700 p-2 rounded  focus:outline-none w-full"
+        >
+          Cancel
         </button>
       </div>
     </div>

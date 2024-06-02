@@ -21,6 +21,7 @@ const Dropdown = ({ showDropdown, setShowDropdown, handleDropdownOption }) => {
             >
               Upload Resource
             </button>
+            <hr />
             <button
               onClick={() => handleDropdownOption("Create Module")}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"

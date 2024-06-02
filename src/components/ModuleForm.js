@@ -23,8 +23,8 @@ const ModuleForm = ({ addModule }) => {
           className="border p-2 rounded mr-2"
           required
         />
-        <button type="submit" className="bg-blue-500 text-white text-xl font-bold p-2 rounded">
-          + Add  {" "} ^ 
+        <button type="submit" className="bg-red-500 text-white text-xl font-bold p-2 rounded">
+          <span className="text-3xl">+ &nbsp;</span>Add {" "} &nbsp;
         </button>
       </form>
     </section>

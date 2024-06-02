@@ -48,19 +48,19 @@ const AddResourceModal = ({ isOpen, onClose, addResource }) => {
               className="hidden"
               required
             />
-            <label htmlFor="resourceFile" className="bg-blue-500 text-white p-2 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none w-full text-center">
+            <label htmlFor="resourceFile" className="bg-[#008392] text-white p-2 rounded-md cursor-pointer  transition duration-300 ease-in-out focus:outline-none w-full text-center">
               Upload File
             </label>
             {resourceFile && (
               <p className="text-gray-700 mt-2">{resourceFile.name}</p>
             )}
           </div>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none w-full">
+          <button type="submit" className="bg-[#008392] text-white p-2 rounded focus:outline-none w-full">
             Add Resource
           </button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
-        <button onClick={onClose} className="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400 focus:outline-none w-full">
+        <button onClick={onClose} className="bg-white text-gray-700 p-2 rounded border focus:outline-none w-full">
           Close
         </button>
       </div>

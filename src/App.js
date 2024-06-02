@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import ModuleList from './components/ModuleList';
-import ModuleForm from './components/ModuleForm';
-import './App.css';
+import React, { useState } from "react";
+import ModuleList from "./components/ModuleList";
+import ModuleForm from "./components/ModuleForm";
+import Footer from "./components/Foooter";
+import emptyBoxImage from "./Assets/box.png"; // Import the image
 
 const App = () => {
   const [modules, setModules] = useState([]);
@@ -24,7 +25,9 @@ const App = () => {
 
   const addResource = (moduleIndex, resource) => {
     const newModules = modules.map((module, i) =>
-      i === moduleIndex ? { ...module, resources: [...module.resources, resource] } : module
+      i === moduleIndex
+        ? { ...module, resources: [...module.resources, resource] }
+        : module
     );
     setModules(newModules);
   };
@@ -32,7 +35,9 @@ const App = () => {
   const deleteResource = (moduleIndex, resourceId) => {
     const newModules = modules.map((module, i) => {
       if (i === moduleIndex) {
-        const newResources = module.resources.filter((resource) => resource.id !== resourceId);
+        const newResources = module.resources.filter(
+          (resource) => resource.id !== resourceId
+        );
         return { ...module, resources: newResources };
       }
       return module;
@@ -64,7 +69,10 @@ const App = () => {
   const deleteLink = (moduleIndex, linkIndex) => {
     const newModules = modules.map((module, i) =>
       i === moduleIndex
-        ? { ...module, links: module.links.filter((_, li) => li !== linkIndex) }
+        ? {
+            ...module,
+            links: module.links.filter((_, index) => index !== linkIndex),
+          }
         : module
     );
     setModules(newModules);
@@ -86,7 +94,10 @@ const App = () => {
 
   const moveResource = (moduleIndex, dragIndex, hoverIndex) => {
     const newModules = [...modules];
-    const [draggedResource] = newModules[moduleIndex].resources.splice(dragIndex, 1);
+    const [draggedResource] = newModules[moduleIndex].resources.splice(
+      dragIndex,
+      1
+    );
     newModules[moduleIndex].resources.splice(hoverIndex, 0, draggedResource);
     setModules(newModules);
   };
@@ -104,7 +115,9 @@ const App = () => {
         ? {
             ...module,
             resources: module.resources.map((resource) =>
-              resource.id === resourceId ? { ...resource, name: newName } : resource
+              resource.id === resourceId
+                ? { ...resource, name: newName }
+                : resource
             ),
           }
         : module
@@ -127,27 +140,40 @@ const App = () => {
   };
 
   return (
-    <div className="p-20 bg-gray-100 min-h-screen ">
-      <div className=' flex flex-row justify-between items-center'>
-      <h1 className="text-3xl font-bold mb-4 text-center">Course Management</h1>
-      <ModuleForm addModule={addModule} />
+    <main>
+      <div className="p-20 bg-gray-100 min-h-screen ">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-3xl font-bold mb-4 text-center">
+            Course Builder
+          </h1>
+          <ModuleForm addModule={addModule} />
+        </div>
+        <div className="flex items-center justify-center h-full">
+          {modules.length === 0 ? ( 
+            <img src={emptyBoxImage} alt="Empty Box" />
+          ) : (
+            <div className="w-[50%]">
+              <ModuleList
+                modules={modules}
+                deleteModule={deleteModule}
+                renameModule={renameModule}
+                addResource={addResource}
+                deleteResource={deleteResource}
+                renameResource={renameResource}
+                addLink={addLink}
+                deleteLink={deleteLink}
+                renameLink={renameLink}
+                moveResource={moveResource}
+                moveLink={moveLink}
+                editResource={editResource}
+                editLink={editLink}
+              />
+            </div>
+          )}
+        </div>
       </div>
-      <ModuleList
-        modules={modules}
-        deleteModule={deleteModule}
-        renameModule={renameModule}
-        addResource={addResource}
-        deleteResource={deleteResource}
-        renameResource={renameResource}
-        addLink={addLink}
-        deleteLink={deleteLink}
-        renameLink={renameLink}
-        moveResource={moveResource}
-        moveLink={moveLink}
-        editResource={editResource}
-        editLink={editLink}
-      />
-    </div>
+      <Footer />
+    </main>
   );
 };
 
