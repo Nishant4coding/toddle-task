@@ -1,12 +1,39 @@
 import React, { useState } from 'react';
-import { DndProvider } from 'react-dnd';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { FiMoreVertical } from 'react-icons/fi';
-import { IoMdArrowDropdownCircle } from "react-icons/io";
-import { BsPlusSquare, BsLink, BsPencilSquare, BsTrash } from "react-icons/bs";
+import DragAndDrop from './DragDrop';
 import AddResourceModal from '../custom/R_Modal';
 import AddLinkModal from '../custom/L_Modal';
-import DragAndDrop from './DragDrop';
+import { FiMoreVertical } from 'react-icons/fi';
+import { IoMdArrowDropdownCircle } from 'react-icons/io';
+import { BsPlusSquare, BsLink, BsPencilSquare, BsTrash } from 'react-icons/bs';
+
+const ItemType = {
+  MODULE: 'module',
+};
+
+const DraggableModule = ({ module, index, moveModule, children }) => {
+  const [, ref] = useDrag({
+    type: ItemType.MODULE,
+    item: { index },
+  });
+
+  const [, drop] = useDrop({
+    accept: ItemType.MODULE,
+    hover: (draggedItem) => {
+      if (draggedItem.index !== index) {
+        moveModule(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
+
+  return (
+    <li ref={(node) => ref(drop(node))} className="p-4 border rounded shadow relative">
+      {children}
+    </li>
+  );
+};
 
 const ModuleList = ({
   modules,
@@ -20,6 +47,7 @@ const ModuleList = ({
   moveLink,
   editResource,
   editLink,
+  moveModule, // Accept moveModule as prop
 }) => {
   const [isResourceModalOpen, setResourceModalOpen] = useState(false);
   const [isLinkModalOpen, setLinkModalOpen] = useState(false);
@@ -46,12 +74,14 @@ const ModuleList = ({
       <div>
         <ul className="space-y-4">
           {modules.map((module, moduleIndex) => (
-            <li key={moduleIndex} className="p-4 border rounded shadow relative bg-white">
+            <DraggableModule key={moduleIndex} index={moduleIndex} moveModule={moveModule} module={module}>
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold flex items-center">
-                  <IoMdArrowDropdownCircle className="mr-2" />
-                  {module.name}
+                <h2 className="text-2xl font-semibold">
+                  <IoMdArrowDropdownCircle />
                 </h2>
+                <div className="flex-1 font-bold p-2 rounded mr-2 mb-2">
+                  {module.name}
+                </div>
                 <div className="relative">
                   <button
                     onClick={() => setIsMenuOpen(isMenuOpen === moduleIndex ? null : moduleIndex)}
@@ -60,7 +90,7 @@ const ModuleList = ({
                     <FiMoreVertical />
                   </button>
                   {isMenuOpen === moduleIndex && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md text-sm font-semibold z-10 p-2">
+                    <div className="absolute right-0 mt-2 w-60 bg-white border rounded shadow-md text-lg font-semibold z-10 p-2">
                       <button
                         onClick={() => openResourceModal(moduleIndex)}
                         className="block w-full text-left px-4 py-2 hover:bg-gray-200 flex items-center"
@@ -92,8 +122,8 @@ const ModuleList = ({
                   )}
                 </div>
               </div>
-              <hr className="my-2" />
-              <div className="pl-4 pr-4 md:pl-16 md:pr-16">
+              <hr />
+              <div className="pl-4 pr-4">
                 <DragAndDrop
                   resources={module.resources}
                   links={module.links}
@@ -105,7 +135,7 @@ const ModuleList = ({
                   deleteLink={(linkId) => deleteLink(moduleIndex, linkId)}
                 />
               </div>
-            </li>
+            </DraggableModule>
           ))}
         </ul>
         <AddResourceModal

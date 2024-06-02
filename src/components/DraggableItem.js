@@ -46,6 +46,7 @@ const DraggableItem = ({ id, name, type, index, moveItem, onEdit, onDelete, file
       {name}
      
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="focus:outline-none">
+            
           <FiMoreVertical />
         </button>
         {isMenuOpen && (

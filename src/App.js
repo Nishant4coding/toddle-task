@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import ModuleList from "./components/ModuleList";
-import ModuleForm from "./components/ModuleForm";
-import Footer from "./components/Foooter";
-import emptyBoxImage from "./Assets/box.png"; // Import the image
+import React, { useState } from 'react';
+import ModuleList from './components/ModuleList';
+import ModuleForm from './components/ModuleForm';
+import Footer from './components/Foooter';
+import emptyBoxImage from './Assets/box.png';
+import './App.css';
 
 const App = () => {
   const [modules, setModules] = useState([]);
@@ -109,72 +110,47 @@ const App = () => {
     setModules(newModules);
   };
 
-  const editResource = (moduleIndex, resourceId, newName) => {
-    const newModules = modules.map((module, i) =>
-      i === moduleIndex
-        ? {
-            ...module,
-            resources: module.resources.map((resource) =>
-              resource.id === resourceId
-                ? { ...resource, name: newName }
-                : resource
-            ),
-          }
-        : module
-    );
-    setModules(newModules);
-  };
-
-  const editLink = (moduleIndex, linkId, newName) => {
-    const newModules = modules.map((module, i) =>
-      i === moduleIndex
-        ? {
-            ...module,
-            links: module.links.map((link) =>
-              link.id === linkId ? { ...link, name: newName } : link
-            ),
-          }
-        : module
-    );
+  const moveModule = (dragIndex, hoverIndex) => {
+    const newModules = [...modules];
+    const [draggedModule] = newModules.splice(dragIndex, 1);
+    newModules.splice(hoverIndex, 0, draggedModule);
     setModules(newModules);
   };
 
   return (
     <main>
-    <div className="p-8 md:p-20 bg-gray-100 min-h-screen">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center md:text-left">
-          Course Builder
-        </h1>
-        <ModuleForm addModule={addModule} />
+      <div className="p-20 bg-gray-100 min-h-screen">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-3xl font-bold mb-4 text-center">
+            Course Builder
+          </h1>
+          <ModuleForm addModule={addModule} />
+        </div>
+        <div className="flex items-center justify-center h-full">
+          {modules.length === 0 ? (
+            <img src={emptyBoxImage} alt="Empty Box" />
+          ) : (
+            <div className="w-full md:w-2/3 lg:w-1/2">
+              <ModuleList
+                modules={modules}
+                deleteModule={deleteModule}
+                renameModule={renameModule}
+                addResource={addResource}
+                deleteResource={deleteResource}
+                renameResource={renameResource}
+                addLink={addLink}
+                deleteLink={deleteLink}
+                renameLink={renameLink}
+                moveResource={moveResource}
+                moveLink={moveLink}
+                moveModule={moveModule} // Pass moveModule function
+              />
+            </div>
+          )}
+        </div>
       </div>
-      <div className="flex items-center justify-center h-full">
-        {modules.length === 0 ? (
-          <img src={emptyBoxImage} alt="Empty Box" />
-        ) : (
-          <div className="w-full md:w-[50%]">
-            <ModuleList
-              modules={modules}
-              deleteModule={deleteModule}
-              renameModule={renameModule}
-              addResource={addResource}
-              deleteResource={deleteResource}
-              renameResource={renameResource}
-              addLink={addLink}
-              deleteLink={deleteLink}
-              renameLink={renameLink}
-              moveResource={moveResource}
-              moveLink={moveLink}
-              editResource={editResource}
-              editLink={editLink}
-            />
-          </div>
-        )}
-      </div>
-    </div>
-    <Footer />
-  </main>
-  
+      <Footer />
+    </main>
   );
 };
 
