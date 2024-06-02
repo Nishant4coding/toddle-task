@@ -1,35 +1,12 @@
 import React from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import DraggableItem from './DraggableItem';
 
 const ItemType = {
   RESOURCE: 'resource',
   LINK: 'link',
 };
 
-const DraggableItem = ({ id, name, type, index, moveItem }) => {
-  const [, ref] = useDrag({
-    type,
-    item: { id, index },
-  });
-
-  const [, drop] = useDrop({
-    accept: type,
-    hover: (draggedItem) => {
-      if (draggedItem.index !== index) {
-        moveItem(draggedItem.index, index);
-        draggedItem.index = index;
-      }
-    },
-  });
-
-  return (
-    <div ref={(node) => ref(drop(node))} className="border p-2 rounded mb-2">
-      {name}
-    </div>
-  );
-};
-
-const DragAndDrop = ({ resources, links, moveResource, moveLink }) => {
+const DragAndDrop = ({ resources, links, moveResource, moveLink, editResource, deleteResource, editLink, deleteLink }) => {
   const moveItem = (dragIndex, hoverIndex, type) => {
     if (type === ItemType.RESOURCE) {
       moveResource(dragIndex, hoverIndex);
@@ -49,6 +26,8 @@ const DragAndDrop = ({ resources, links, moveResource, moveLink }) => {
           type={ItemType.RESOURCE}
           index={index}
           moveItem={(dragIndex, hoverIndex) => moveItem(dragIndex, hoverIndex, ItemType.RESOURCE)}
+          onEdit={editResource}
+          onDelete={deleteResource}
         />
       ))}
       <h3 className="text-xl font-semibold mb-2">Links</h3>
@@ -60,6 +39,8 @@ const DragAndDrop = ({ resources, links, moveResource, moveLink }) => {
           type={ItemType.LINK}
           index={index}
           moveItem={(dragIndex, hoverIndex) => moveItem(dragIndex, hoverIndex, ItemType.LINK)}
+          onEdit={editLink}
+          onDelete={deleteLink}
         />
       ))}
     </div>

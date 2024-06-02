@@ -20,22 +20,32 @@ const ResourceForm = ({ addResource }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
-      <input
-        type="text"
-        value={resourceName}
-        onChange={(e) => setResourceName(e.target.value)}
-        placeholder="Enter resource name"
-        className="border p-2 rounded mr-2"
-        required
-      />
-      <input
-        type="file"
-        onChange={(e) => setResourceFile(e.target.files[0])}
-        className="border p-2 rounded mr-2"
-        required
-      />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Add Resource to the Module</h2>
+      <div className="mb-4">
+        <input
+          type="text"
+          value={resourceName}
+          onChange={(e) => setResourceName(e.target.value)}
+          placeholder="Enter resource name"
+          className="border border-gray-300 p-2 rounded w-full"
+          required
+        />
+      </div>
+      <div className="mb-4 relative">
+        <input
+          type="file"
+          onChange={(e) => setResourceFile(e.target.files[0])}
+          className=" border-gray-300 p-2 rounded w-full appearance-none"
+          required
+        />
+        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+          <svg className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+      </div>
+      <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
         Add Resource
       </button>
       {error && <p className="text-red-500 mt-2">{error}</p>}

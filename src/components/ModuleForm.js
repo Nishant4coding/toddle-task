@@ -11,9 +11,9 @@ const ModuleForm = ({ addModule }) => {
 
   return (
     <section className="flex flex-row justify-center items-center ">
-        <button type="submit" className="bg-[#AF273E] text-white pr-4 pl-4 rounded">
+        {/* <button type="submit" className="bg-[#AF273E] text-white pr-4 pl-4 rounded">
          + Add ^
-        </button>
+        </button> */}
       <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"
@@ -23,8 +23,8 @@ const ModuleForm = ({ addModule }) => {
           className="border p-2 rounded mr-2"
           required
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Add Module
+        <button type="submit" className="bg-blue-500 text-white text-xl font-bold p-2 rounded">
+          + Add  {" "} ^ 
         </button>
       </form>
     </section>

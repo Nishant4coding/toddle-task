@@ -24,17 +24,15 @@ const App = () => {
 
   const addResource = (moduleIndex, resource) => {
     const newModules = modules.map((module, i) =>
-      i === moduleIndex
-        ? { ...module, resources: [...module.resources, resource] }
-        : module
+      i === moduleIndex ? { ...module, resources: [...module.resources, resource] } : module
     );
     setModules(newModules);
   };
 
-  const deleteResource = (moduleIndex, resourceIndex) => {
+  const deleteResource = (moduleIndex, resourceId) => {
     const newModules = modules.map((module, i) => {
       if (i === moduleIndex) {
-        const newResources = module.resources.filter((_, j) => j !== resourceIndex);
+        const newResources = module.resources.filter((resource) => resource.id !== resourceId);
         return { ...module, resources: newResources };
       }
       return module;
@@ -43,83 +41,97 @@ const App = () => {
   };
 
   const renameResource = (moduleIndex, resourceIndex, newName) => {
-    const newModules = modules.map((module, i) => {
-      if (i === moduleIndex) {
-        const newResources = module.resources.map((resource, j) =>
-          j === resourceIndex ? { ...resource, name: newName } : resource
-        );
-        return { ...module, resources: newResources };
-      }
-      return module;
-    });
-    setModules(newModules);
-  };
-
-  const addLink = (moduleIndex, link) => {
     const newModules = modules.map((module, i) =>
       i === moduleIndex
-        ? { ...module, links: [...module.links, link] }
+        ? {
+            ...module,
+            resources: module.resources.map((resource, ri) =>
+              ri === resourceIndex ? { ...resource, name: newName } : resource
+            ),
+          }
         : module
     );
     setModules(newModules);
   };
 
+  const addLink = (moduleIndex, link) => {
+    const newModules = modules.map((module, i) =>
+      i === moduleIndex ? { ...module, links: [...module.links, link] } : module
+    );
+    setModules(newModules);
+  };
+
   const deleteLink = (moduleIndex, linkIndex) => {
-    const newModules = modules.map((module, i) => {
-      if (i === moduleIndex) {
-        const newLinks = module.links.filter((_, j) => j !== linkIndex);
-        return { ...module, links: newLinks };
-      }
-      return module;
-    });
+    const newModules = modules.map((module, i) =>
+      i === moduleIndex
+        ? { ...module, links: module.links.filter((_, li) => li !== linkIndex) }
+        : module
+    );
     setModules(newModules);
   };
 
   const renameLink = (moduleIndex, linkIndex, newName) => {
-    const newModules = modules.map((module, i) => {
-      if (i === moduleIndex) {
-        const newLinks = module.links.map((link, j) =>
-          j === linkIndex ? { ...link, name: newName } : link
-        );
-        return { ...module, links: newLinks };
-      }
-      return module;
-    });
+    const newModules = modules.map((module, i) =>
+      i === moduleIndex
+        ? {
+            ...module,
+            links: module.links.map((link, li) =>
+              li === linkIndex ? { ...link, name: newName } : link
+            ),
+          }
+        : module
+    );
     setModules(newModules);
   };
 
   const moveResource = (moduleIndex, dragIndex, hoverIndex) => {
-    const newModules = modules.map((module, i) => {
-      if (i === moduleIndex) {
-        const draggedResource = module.resources[dragIndex];
-        const newResources = [...module.resources];
-        newResources.splice(dragIndex, 1);
-        newResources.splice(hoverIndex, 0, draggedResource);
-        return { ...module, resources: newResources };
-      }
-      return module;
-    });
+    const newModules = [...modules];
+    const [draggedResource] = newModules[moduleIndex].resources.splice(dragIndex, 1);
+    newModules[moduleIndex].resources.splice(hoverIndex, 0, draggedResource);
     setModules(newModules);
   };
 
   const moveLink = (moduleIndex, dragIndex, hoverIndex) => {
-    const newModules = modules.map((module, i) => {
-      if (i === moduleIndex) {
-        const draggedLink = module.links[dragIndex];
-        const newLinks = [...module.links];
-        newLinks.splice(dragIndex, 1);
-        newLinks.splice(hoverIndex, 0, draggedLink);
-        return { ...module, links: newLinks };
-      }
-      return module;
-    });
+    const newModules = [...modules];
+    const [draggedLink] = newModules[moduleIndex].links.splice(dragIndex, 1);
+    newModules[moduleIndex].links.splice(hoverIndex, 0, draggedLink);
+    setModules(newModules);
+  };
+
+  const editResource = (moduleIndex, resourceId, newName) => {
+    const newModules = modules.map((module, i) =>
+      i === moduleIndex
+        ? {
+            ...module,
+            resources: module.resources.map((resource) =>
+              resource.id === resourceId ? { ...resource, name: newName } : resource
+            ),
+          }
+        : module
+    );
+    setModules(newModules);
+  };
+
+  const editLink = (moduleIndex, linkId, newName) => {
+    const newModules = modules.map((module, i) =>
+      i === moduleIndex
+        ? {
+            ...module,
+            links: module.links.map((link) =>
+              link.id === linkId ? { ...link, name: newName } : link
+            ),
+          }
+        : module
+    );
     setModules(newModules);
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">Course Modules</h1>
+    <div className="p-20 bg-gray-100 min-h-screen ">
+      <div className=' flex flex-row justify-between items-center'>
+      <h1 className="text-3xl font-bold mb-4 text-center">Course Management</h1>
       <ModuleForm addModule={addModule} />
+      </div>
       <ModuleList
         modules={modules}
         deleteModule={deleteModule}
@@ -132,6 +144,8 @@ const App = () => {
         renameLink={renameLink}
         moveResource={moveResource}
         moveLink={moveLink}
+        editResource={editResource}
+        editLink={editLink}
       />
     </div>
   );

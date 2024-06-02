@@ -13,7 +13,7 @@ const ResourceList = ({ resources, deleteResource, renameResource,setResourceFil
               onChange={(e) => renameResource(index, e.target.value)}
               className="border p-2 rounded flex-1"
             />
-            <span  onChange={(e) => setResourceFile(e.target.files.value)}>{resource.resourceFile}</span>
+            <span onChange={(e) => setResourceFile(e.target.files.value)}>{resource.resourceFile}</span>
             <button
               onClick={() => deleteResource(index)}
               className="bg-red-500 text-white p-2 rounded"
