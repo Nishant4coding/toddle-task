@@ -41,11 +41,11 @@ const DraggableItem = ({ id, name, type, index, moveItem, onEdit, onDelete, file
   };
   
   return (
-    <section className=''>
-    <div ref={(node) => ref(drop(node))} className="font-bold p-2 rounded mb-2 ">
+   
+    <div ref={(node) => ref(drop(node))} className="font-bold items-center flex rounded gap-20">
       {name}
      
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="focus:outline-none ml-96">
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="focus:outline-none">
           <FiMoreVertical />
         </button>
         {isMenuOpen && (
@@ -84,7 +84,7 @@ const DraggableItem = ({ id, name, type, index, moveItem, onEdit, onDelete, file
         )}
       </div>
     
-    </section>
+
   );
 };
 

@@ -141,39 +141,40 @@ const App = () => {
 
   return (
     <main>
-      <div className="p-20 bg-gray-100 min-h-screen ">
-        <div className="flex flex-row justify-between items-center">
-          <h1 className="text-3xl font-bold mb-4 text-center">
-            Course Builder
-          </h1>
-          <ModuleForm addModule={addModule} />
-        </div>
-        <div className="flex items-center justify-center h-full">
-          {modules.length === 0 ? ( 
-            <img src={emptyBoxImage} alt="Empty Box" />
-          ) : (
-            <div className="w-[50%]">
-              <ModuleList
-                modules={modules}
-                deleteModule={deleteModule}
-                renameModule={renameModule}
-                addResource={addResource}
-                deleteResource={deleteResource}
-                renameResource={renameResource}
-                addLink={addLink}
-                deleteLink={deleteLink}
-                renameLink={renameLink}
-                moveResource={moveResource}
-                moveLink={moveLink}
-                editResource={editResource}
-                editLink={editLink}
-              />
-            </div>
-          )}
-        </div>
+    <div className="p-8 md:p-20 bg-gray-100 min-h-screen">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center md:text-left">
+          Course Builder
+        </h1>
+        <ModuleForm addModule={addModule} />
       </div>
-      <Footer />
-    </main>
+      <div className="flex items-center justify-center h-full">
+        {modules.length === 0 ? (
+          <img src={emptyBoxImage} alt="Empty Box" />
+        ) : (
+          <div className="w-full md:w-[50%]">
+            <ModuleList
+              modules={modules}
+              deleteModule={deleteModule}
+              renameModule={renameModule}
+              addResource={addResource}
+              deleteResource={deleteResource}
+              renameResource={renameResource}
+              addLink={addLink}
+              deleteLink={deleteLink}
+              renameLink={renameLink}
+              moveResource={moveResource}
+              moveLink={moveLink}
+              editResource={editResource}
+              editLink={editLink}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+    <Footer />
+  </main>
+  
   );
 };
 

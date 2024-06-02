@@ -29,8 +29,8 @@ const DragAndDrop = ({
   return (
     <div>
       {resources.map((resource, index) => (
-        <div key={resource.id} className='flex flex-row gap-2 items-center'>
-          <BsFileEarmarkPdf className="text-xl font-semibold mb-2 text-blue-500" />
+        <div key={resource.id} className='flex flex-row justify-between items-center'>
+          <BsFileEarmarkPdf className="text-xl font-semibold mb-2 text-blue-500 " />
           <DraggableItem
             id={resource.id}
             name={resource.name}
