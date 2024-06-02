@@ -7,6 +7,7 @@ import AddLinkModal from '../custom/L_Modal';
 import { FiMoreVertical } from 'react-icons/fi';
 import { IoMdArrowDropdownCircle } from 'react-icons/io';
 import { BsPlusSquare, BsLink, BsPencilSquare, BsTrash } from 'react-icons/bs';
+import { Collapse } from 'react-collapse';
 
 const ItemType = {
   MODULE: 'module',
@@ -53,6 +54,14 @@ const ModuleList = ({
   const [isLinkModalOpen, setLinkModalOpen] = useState(false);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(null);
+  const [accordionState, setAccordionState] = useState({});
+
+  const toggleAccordion = (index) => {
+    setAccordionState((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
 
   const openResourceModal = (moduleIndex) => {
     setCurrentModuleIndex(moduleIndex);
@@ -76,7 +85,10 @@ const ModuleList = ({
           {modules.map((module, moduleIndex) => (
             <DraggableModule key={moduleIndex} index={moduleIndex} moveModule={moveModule} module={module}>
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold">
+                <h2
+                  className="text-2xl font-semibold cursor-pointer"
+                  onClick={() => toggleAccordion(moduleIndex)}
+                >
                   <IoMdArrowDropdownCircle />
                 </h2>
                 <div className="flex-1 font-bold p-2 rounded mr-2 mb-2">
@@ -122,19 +134,21 @@ const ModuleList = ({
                   )}
                 </div>
               </div>
-              <hr />
-              <div className="pl-4 pr-4">
-                <DragAndDrop
-                  resources={module.resources}
-                  links={module.links}
-                  moveResource={(dragIndex, hoverIndex) => moveResource(moduleIndex, dragIndex, hoverIndex)}
-                  moveLink={(dragIndex, hoverIndex) => moveLink(moduleIndex, dragIndex, hoverIndex)}
-                  editResource={(resourceId, newName) => editResource(moduleIndex, resourceId, newName)}
-                  deleteResource={(resourceId) => deleteResource(moduleIndex, resourceId)}
-                  editLink={(linkId, newName) => editLink(moduleIndex, linkId, newName)}
-                  deleteLink={(linkId) => deleteLink(moduleIndex, linkId)}
-                />
-              </div>
+              <Collapse isOpened={accordionState[moduleIndex]}>
+                <hr />
+                <div className="pl-4 pr-4">
+                  <DragAndDrop
+                    resources={module.resources}
+                    links={module.links}
+                    moveResource={(dragIndex, hoverIndex) => moveResource(moduleIndex, dragIndex, hoverIndex)}
+                    moveLink={(dragIndex, hoverIndex) => moveLink(moduleIndex, dragIndex, hoverIndex)}
+                    editResource={(resourceId, newName) => editResource(moduleIndex, resourceId, newName)}
+                    deleteResource={(resourceId) => deleteResource(moduleIndex, resourceId)}
+                    editLink={(linkId, newName) => editLink(moduleIndex, linkId, newName)}
+                    deleteLink={(linkId) => deleteLink(moduleIndex, linkId)}
+                  />
+                </div>
+              </Collapse>
             </DraggableModule>
           ))}
         </ul>
